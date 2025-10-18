@@ -142,6 +142,8 @@ export default {
 </script>
 ```
 
+---
+
 ## 二、事件处理
 
 ### 1、基本用法
@@ -370,6 +372,8 @@ export default {
 };
 </script>
 ```
+
+---
 
 ## 文献参考
 
