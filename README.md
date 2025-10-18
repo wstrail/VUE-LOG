@@ -34,3 +34,7 @@ vue-learning/
 ```
 
 持续更新中，记录每个学习阶段的成长与实践。
+
+## 参考文献
+
+[Vue3 官方文档](https://cn.vuejs.org/)
