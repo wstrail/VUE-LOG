@@ -1,0 +1,377 @@
+# Vue.js 基础文档
+
+## 一、基础语法
+
+### 1、 文本插值
+
+```vue
+<template>
+  <div>
+    <!-- 文本插值可放入任意有输出值的语句 -->
+    {{ message }}
+    {{ count + 1 }}
+    {{ message.split("").reverse().join("") }}
+  </div>
+</template>
+```
+
+### 2、渲染 HTML
+
+```vue
+<template>
+  <div>
+    <!-- 使用 v-html 指令渲染原始 HTML -->
+    <div v-html="rawHtml"></div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      rawHtml: '<span style="color: red">红色文本</span>',
+    };
+  },
+};
+</script>
+```
+
+### 3、属性绑定
+
+```vue
+<template>
+  <div>
+    <!-- 完整语法 -->
+    <div v-bind:id="dynamicId"></div>
+    <div v-bind:class="className"></div>
+
+    <!-- 简写语法 -->
+    <div :id="dynamicId"></div>
+    <div :class="className"></div>
+
+    <!-- 绑定多个属性 -->
+    <div v-bind="objectOfAttrs"></div>
+
+    <!-- 布尔型属性 -->
+    <button :disabled="isButtonDisabled">按钮</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      dynamicId: "my-id",
+      className: "container",
+      isButtonDisabled: true,
+      objectOfAttrs: {
+        id: "container",
+        class: "wrapper",
+      },
+    };
+  },
+};
+</script>
+```
+
+### 4、条件渲染
+
+```vue
+<template>
+  <div>
+    <!-- v-if 指令 -->
+    <div v-if="type === 'A'">显示 A</div>
+    <div v-else-if="type === 'B'">显示 B</div>
+    <div v-else>显示 C</div>
+
+    <!-- v-show 指令 -->
+    <div v-show="isVisible">可见内容</div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      type: "A",
+      isVisible: true,
+    };
+  },
+};
+</script>
+```
+
+### 5、列表渲染
+
+```vue
+<template>
+  <div>
+    <!-- 数组渲染 -->
+    <ul>
+      <li v-for="(item, index) in items" :key="item.id">
+        {{ index }} - {{ item.name }}
+      </li>
+    </ul>
+
+    <!-- 对象渲染 -->
+    <ul>
+      <li v-for="(value, key, index) in userInfo" :key="key">
+        {{ index }}. {{ key }}: {{ value }}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      items: [
+        { id: 1, name: "项目一" },
+        { id: 2, name: "项目二" },
+        { id: 3, name: "项目三" },
+      ],
+      userInfo: {
+        name: "张三",
+        age: 25,
+        city: "北京",
+      },
+    };
+  },
+};
+</script>
+```
+
+## 二、事件处理
+
+### 1、基本用法
+
+```vue
+<template>
+  <div>
+    <!-- 内联事件处理 -->
+    <button @click="count++">增加: {{ count }}</button>
+
+    <!-- 方法事件处理 -->
+    <button @click="greet">打招呼</button>
+
+    <!-- 方法调用带参数 -->
+    <button @click="sayHello('Vue.js')">说你好</button>
+
+    <!-- 访问原生事件对象 -->
+    <button @click="warn('表单未提交', $event)">提交</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      count: 0,
+      name: "Vue.js",
+    };
+  },
+  methods: {
+    greet(event) {
+      // event 是原生 DOM 事件
+      alert(`Hello ${this.name}!`);
+      if (event) {
+        console.log(event.target.tagName);
+      }
+    },
+    sayHello(message) {
+      alert(message);
+    },
+    warn(message, event) {
+      // 访问原生事件
+      if (event) {
+        event.preventDefault();
+      }
+      alert(message);
+    },
+  },
+};
+</script>
+```
+
+### 2、事件修饰符
+
+```vue
+<template>
+  <div>
+    <!-- .stop - 阻止事件冒泡 -->
+    <div @click="parentClick">
+      <button @click.stop="childClick">停止冒泡</button>
+    </div>
+
+    <!-- .prevent - 阻止默认行为 -->
+    <form @submit.prevent="onSubmit">
+      <button type="submit">提交</button>
+    </form>
+
+    <!-- .capture - 使用事件捕获模式 -->
+    <div @click.capture="captureClick">
+      <button @click="innerClick">捕获事件</button>
+    </div>
+
+    <!-- .self - 只当事件是从元素本身触发时触发回调 -->
+    <div @click.self="selfClick">
+      <button>点击按钮不会触发 div 的点击事件</button>
+    </div>
+
+    <!-- .once - 只触发一次 -->
+    <button @click.once="onceClick">只触发一次</button>
+
+    <!-- .passive - 滚动事件的默认行为立即触发 -->
+    <div @scroll.passive="onScroll" style="height: 100px; overflow: auto;">
+      <!-- 长内容 -->
+    </div>
+
+    <!-- 修饰符可以串联 -->
+    <a @click.stop.prevent="doThat">链接</a>
+
+    <!-- 按键修饰符 -->
+    <input @keyup.enter="submitForm" placeholder="按回车提交" />
+    <input @keyup.13="submitForm" placeholder="同样按回车提交" />
+
+    <!-- 系统修饰键 -->
+    <input @keyup.ctrl.enter="ctrlEnter" placeholder="Ctrl + Enter" />
+
+    <!-- 鼠标按钮修饰符 -->
+    <button @click.right="rightClick">右键点击</button>
+    <button @click.middle="middleClick">中键点击</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    parentClick() {
+      console.log("父元素点击");
+    },
+    childClick() {
+      console.log("子元素点击 - 不会冒泡到父元素");
+    },
+    onSubmit() {
+      console.log("表单提交 - 阻止了默认行为");
+    },
+    captureClick() {
+      console.log("捕获阶段触发");
+    },
+    innerClick() {
+      console.log("内部点击");
+    },
+    selfClick() {
+      console.log("只有点击 div 本身才触发");
+    },
+    onceClick() {
+      console.log("这个只会触发一次");
+    },
+    onScroll() {
+      console.log("滚动事件");
+    },
+    doThat() {
+      console.log("阻止默认行为和事件冒泡");
+    },
+    submitForm() {
+      console.log("表单提交");
+    },
+    ctrlEnter() {
+      console.log("Ctrl + Enter 被按下");
+    },
+    rightClick() {
+      console.log("右键点击");
+    },
+    middleClick() {
+      console.log("中键点击");
+    },
+  },
+};
+</script>
+```
+
+### 3、完整的按键修饰符列表
+
+```vue
+<template>
+  <div>
+    <!-- 常用按键别名 -->
+    <input @keyup.enter="onEnter" />
+    <input @keyup.tab="onTab" />
+    <input @keyup.delete="onDelete" />
+    <input @keyup.esc="onEsc" />
+    <input @keyup.space="onSpace" />
+    <input @keyup.up="onUp" />
+    <input @keyup.down="onDown" />
+    <input @keyup.left="onLeft" />
+    <input @keyup.right="onRight" />
+
+    <!-- 系统修饰键 -->
+    <input @keyup.ctrl="onCtrl" />
+    <input @keyup.alt="onAlt" />
+    <input @keyup.shift="onShift" />
+    <input @keyup.meta="onMeta" />
+
+    <!-- 精确修饰符 -->
+    <button @click.ctrl.exact="onCtrlClick">仅 Ctrl 时触发</button>
+    <button @click.exact="onPureClick">没有任何系统修饰键时触发</button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    onEnter() {
+      console.log("Enter 键");
+    },
+    onTab() {
+      console.log("Tab 键");
+    },
+    onDelete() {
+      console.log("Delete 键");
+    },
+    onEsc() {
+      console.log("Esc 键");
+    },
+    onSpace() {
+      console.log("Space 键");
+    },
+    onUp() {
+      console.log("上箭头");
+    },
+    onDown() {
+      console.log("下箭头");
+    },
+    onLeft() {
+      console.log("左箭头");
+    },
+    onRight() {
+      console.log("右箭头");
+    },
+    onCtrl() {
+      console.log("Ctrl 键");
+    },
+    onAlt() {
+      console.log("Alt 键");
+    },
+    onShift() {
+      console.log("Shift 键");
+    },
+    onMeta() {
+      console.log("Meta 键");
+    },
+    onCtrlClick() {
+      console.log("仅 Ctrl 点击");
+    },
+    onPureClick() {
+      console.log("纯点击");
+    },
+  },
+};
+</script>
+```
+
+## 文献参考
+
+- [官方文档](https://cn.vuejs.org/guide/essentials/event-handling.html)
+- [b 站视频]()

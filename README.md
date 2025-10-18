@@ -23,4 +23,14 @@ Vue.js 系统性学习记录，包含基础知识、实战项目和最佳实践�
 
 Vue 3 | Vite | Vue Router | Pinia | TypeScript
 
+## 🗃️ 项目结构
+
+```
+vue-learning/
+├── basics/ # 基础语法示例
+├── components/ # 组件开发实践
+├── projects/ # 完整项目实战
+└── docs/ # 学习笔记文档
+```
+
 持续更新中，记录每个学习阶段的成长与实践。
