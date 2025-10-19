@@ -373,9 +373,52 @@ export default {
 </script>
 ```
 
----
+## 三、一些小知识点
+
+### 1、数组变化侦听
+
+- 引起 UI 自动更新：
+
+```vue
+.push() .pop() .shift() .unshift() .splice() .sort() .reverse
+```
+
+- 不引起 UI 更新
+
+```vue
+.concat() .slice() .fitter()
+```
+
+若要更新可使用：
+
+```vue
+this.names=this.names.concat([""])
+```
+
+### 2、计算属性
+
+```vue
+<template>
+  <p>{{ content }}</p>
+</template>
+<script>
+export default {
+  data() {
+    return {
+
+      },
+    };
+  },
+  computed: {
+    content() {
+      return  ;
+    },
+  },
+</script>
+```
 
 ## 文献参考
 
 - [官方文档](https://cn.vuejs.org/guide/essentials/event-handling.html)
+
 - [b 站视频]()

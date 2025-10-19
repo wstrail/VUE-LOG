@@ -5,8 +5,13 @@
   <Helloworld />
   <ifdemo />
   <listdemo />
+  <Arraylist />
+  <Computerdemo />
 </template>
 <script setup>
+import Arraylist from "./arraylist.vue";
+import Computerdemo from "./computerdemo.vue";
+
 /*export default {
   data() {
     return {
@@ -15,8 +20,8 @@
       HTML: "<p>text</p>",
     };
   },
-};*/
+};
 import Helloworld from "./helloworld.vue";
 import ifdemo from "./ifdemo.vue";
-import listdemo from "./listdemo.vue";
+import listdemo from "./listdemo.vue";*/
 </script>
