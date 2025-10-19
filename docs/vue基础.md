@@ -417,6 +417,60 @@ export default {
 </script>
 ```
 
+### 3、class 绑定
+
+使用 v-bind 绑定 class 时''内元素可为对象或数组
+
+```vue
+<p :class="{ active: isActive, 'text-danger': haserror }"></p>
+<p :class="[arractive, arrHasError]"></p>
+```
+
+### 4、style 绑定
+
+同 class 绑定
+
+### 5.侦听器
+
+在 Vue 3 中，watch 函数用于侦听响应式属性。
+当侦听的属性值发生变化时，Vue 会触发回调函数执行。
+
+```vue
+<script>
+export default {
+  data() {
+    return {
+      message: "Hello",
+    };
+  },
+  watch: {
+    message /*同data中的name*/(newvalue, oldvalue) {},
+  },
+};
+</script>
+```
+
+### 6、表单输入绑定
+
+将表单输入框的内容同步给 JavaScript 中相应的变量
+
+```vue
+<template>
+  <form><input type="text" v-model="message"></input></form>
+    <p>{{ message }}</p>
+</template>
+<script>
+export default {
+  data() {
+    return {
+        message:""
+    };
+  },
+};
+</script>
+
+```
+
 ## 文献参考
 
 - [官方文档](https://cn.vuejs.org/guide/essentials/event-handling.html)

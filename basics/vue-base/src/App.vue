@@ -7,10 +7,14 @@
   <listdemo />
   <Arraylist />
   <Computerdemo />
+  <Watchdemo />
+  <Modeldemo />
 </template>
 <script setup>
 import Arraylist from "./arraylist.vue";
 import Computerdemo from "./computerdemo.vue";
+import Modeldemo from "./modeldemo.vue";
+import Watchdemo from "./watchdemo.vue";
 
 /*export default {
   data() {
