@@ -21,4 +21,4 @@ export default {
   },
 };
 </script>
-注:父级传递过来的元素
+

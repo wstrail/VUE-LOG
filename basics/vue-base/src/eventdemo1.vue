@@ -1,6 +1,6 @@
 <template>
   <h3>内联</h3>
-  <button v-on:click="addCount">Add</button>
+  <button v-on:click="addCount()">Add</button>
   <p>{{ count }}</p>
 </template>
 <script>

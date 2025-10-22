@@ -452,7 +452,7 @@ export default {
 
 ### 6、表单输入绑定
 
-将表单输入框的内容同步给 JavaScript 中相应的变量
+使用`v-model`将表单输入框的内容同步给 JavaScript 中相应的变量
 
 ```vue
 <template>
@@ -476,7 +476,22 @@ export default {
 访问 dom 元素
 
 ```vue
-
+<template>
+  <div ref="container">{{}}</div>
+  <button @click="getElementHandle">获取元素</button>
+</template>
+<script>
+export default {
+  data() {
+    return { content: "" };
+  },
+  methods: {
+    getElementHandle() {
+      console.log((this.$refs.container.innerHTML = "changed"));
+    },
+  },
+};
+</script>
 ```
 
 ## 文献参考
